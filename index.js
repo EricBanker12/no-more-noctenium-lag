@@ -50,6 +50,17 @@ module.exports = function noMoreNocteniumLag(dispatch) {
 				timeout = Date.now()
 			}
 		})
+		
+		// Allow after C_SHOW_INVEN
+		dispatch.hook('C_SHOW_INVEN', 'raw', {order: -100}, code => {
+			// if noctenium active
+			if (noctActive) {
+				// set counter to allow packets
+				counter.S_INVEN = 0
+				counter.S_INVEN_CHANGEDSLOT = 0
+				counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
+			}
+		})
 	}
 	
 	// Skill method inventory
