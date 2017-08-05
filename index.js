@@ -10,7 +10,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
 	inCombat = false,		// combat status
 	achieves = null,		// for Pinkie Pie's "Smart" achievement method
 	counter = {},			// for skill methods
-	timeout = 0				// failsafe timeout for blocking packets
+	timeout = 0				// Handler variable for failsafe timeout
 	
 	// Get character ID on login and disable noctenium
 	dispatch.hook('S_LOGIN', 2, {order: -100}, event => {
@@ -36,32 +36,29 @@ module.exports = function noMoreNocteniumLag(dispatch) {
 		}
 	})
 	
-	// if "Skill" method for skills OR achievements
-	if (config.inventoryMethod.toLowerCase() == 'skill' || config.achievementMethod.toLowerCase() == 'skill') {
-		// detect skill usage
-		dispatch.hook('S_ACTION_STAGE', 'raw', {order: -100}, code => {
-			// if noctenium active
-			if (noctActive) {
-				// set counter to block X number of packets
-				counter.S_INVEN = 2
-				counter.S_INVEN_CHANGEDSLOT = 1
-				counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 1
-				// set failsafe timeout
-				timeout = Date.now()
-			}
-		})
-		
-		// Allow after C_SHOW_INVEN
-		dispatch.hook('C_SHOW_INVEN', 'raw', {order: -100}, code => {
-			// if noctenium active
-			if (noctActive) {
-				// set counter to allow packets
-				counter.S_INVEN = 0
-				counter.S_INVEN_CHANGEDSLOT = 0
-				counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
-			}
-		})
-	}
+	// detect skill usage
+	dispatch.hook('S_ACTION_STAGE', 'raw', {order: -100}, code => {
+		// if noctenium active
+		if (noctActive) {
+			// set counter to block X number of packets
+			counter.S_INVEN = 2
+			counter.S_INVEN_CHANGEDSLOT = 1
+			counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 1
+			// set failsafe timeout
+			timeout = Date.now()
+		}
+	})
+	
+	// Allow after C_SHOW_INVEN
+	dispatch.hook('C_SHOW_INVEN', 'raw', {order: -100}, code => {
+		// if noctenium active
+		if (noctActive) {
+			// set counter to allow packets
+			counter.S_INVEN = 0
+			counter.S_INVEN_CHANGEDSLOT = 0
+			counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
+		}
+	})
 	
 	// Skill method inventory
 	if (config.inventoryMethod.toLowerCase() == 'skill') {
@@ -102,17 +99,43 @@ module.exports = function noMoreNocteniumLag(dispatch) {
 				}
 			}
 		})
-		// TODO!!!
 		// Block S_INVEN
-		// Allow after C_SHOW_INVEN
+		dispatch.hook('S_INVEN', 'raw', {order: 999}, code => {
+			let timeDifference = Date.now() - timeout
+			if (noctActive && counter.S_INVEN > 0 && timeDifference < config.timeout && inCombat) {
+				if (debug) {console.log('S_INVEN Blocked')}
+				counter.S_INVEN -= 1
+				return false
+			}
+		})
 		// Block S_INVEN_CHANGEDSLOT
+		dispatch.hook('S_INVEN_CHANGEDSLOT', 'raw', {order: 999}, code => {
+			let timeDifference = Date.now() - timeout
+			if (noctActive && counter.S_INVEN_CHANGEDSLOT > 0 && timeDifference < config.timeout && inCombat) {
+				if (debug) {console.log('S_INVEN_CHANGEDSLOT Blocked')}
+				counter.S_INVEN_CHANGEDSLOT -= 1
+				return false
+			}
+		})
 	}
 	
 	// Skill method achievements
 	if (config.achievementMethod.toLowerCase() == 'skill') {
 		dispatch.hook('S_UPDATE_ACHIEVEMENT_PROGRESS', 'raw', {order: 999}, code => {
 			let timeDifference = Date.now() - timeout
-			if (noctActive && counter.S_UPDATE_ACHIEVEMENT_PROGRESS > 0 && timeDifference < 10000) {
+			if (noctActive && counter.S_UPDATE_ACHIEVEMENT_PROGRESS > 0 && timeDifference < config.timeout) {
+				if (debug) {console.log('S_UPDATE_ACHIEVEMENT_PROGRESS Blocked')}
+				counter.S_UPDATE_ACHIEVEMENT_PROGRESS -= 1
+				return false
+			}
+		})
+	}
+	
+	// Combat method achievements
+	if (config.achievementMethod.toLowerCase() == 'combat') {
+		dispatch.hook('S_UPDATE_ACHIEVEMENT_PROGRESS', 'raw', {order: 999}, code => {
+			let timeDifference = Date.now() - timeout
+			if (noctActive && counter.S_UPDATE_ACHIEVEMENT_PROGRESS > 0 && timeDifference < config.timeout && inCombat) {
 				if (debug) {console.log('S_UPDATE_ACHIEVEMENT_PROGRESS Blocked')}
 				counter.S_UPDATE_ACHIEVEMENT_PROGRESS -= 1
 				return false

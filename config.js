@@ -1,18 +1,29 @@
 // Edit these variables for different methods.
 module.exports = {
-	inventoryMethod: 'Skill',		// Choose a method for preventing inventory packet lag.
+	inventoryMethod: 'Combat',		// Choose a method for preventing inventory packet lag.
+									
 									// "Skill" method blocks the next inventory packets
 									// after using a skill with noctenium.
-									// "Combat" method (NOT YET IMPLEMENTED!!!)
-									// always blocks inventory packets
-									// during combat with noctenium except when openning
-									// your inventory.
+									
+									// "Combat" method is same as "Skill" method, but it 
+									// only while in-combat
+									
 									// "None" does not block inventory packets
-	
-	achievementMethod: 'Skill'		// Choose a method for preventing achievement packet lag.
+									
+	achievementMethod: 'Combat',		// Choose a method for preventing achievement packet lag.
+									
 									// "Skill" method blocks the next achievement packet
 									// after using a skill with noctenium.
+									
+									// "Combat" method is same as "Skill" method, but it 
+									// only while in-combat
+									
 									// "Smart" method made by Pinkie Pie. I can't figure out
 									// how it works. >_<
+									
 									// "None" does not block achievement packets
+									
+	timeout: 5000					// Failsafe timeout length in ms. If something messes up,
+									// stop blocking packets after this much time from using
+									// a skill. If too low, packets may fail to be blocked.
 }
