@@ -21,7 +21,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     // Detect noctenium activation
     dispatch.hook('S_ABNORMALITY_BEGIN', 2, {order: -100}, event => {
         // if target is your character and noctenium is toggled on, set true
-        if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916].includes(event.id)) {
+        if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916, 920, 921, 922, 929].includes(event.id)) {
             noctActive = true
             if (debug) {console.log('noctActive', noctActive)}
         }
@@ -30,7 +30,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     // Detect noctenium end
     dispatch.hook('S_ABNORMALITY_END', 1, {order: -100}, event => {
         // if target is your character and noctenium is toggled off, set false
-        if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916].includes(event.id)) {
+        if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916, 920, 921, 922, 929].includes(event.id)) {
             noctActive = false
             if (debug) {console.log('noctActive', noctActive)}
         }
