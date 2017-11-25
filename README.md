@@ -7,13 +7,23 @@ Tera-Proxy module for Tera Online. Blocks packets which caused client lag when u
 ### Requirements
 [Tera-Proxy](https://github.com/meishuu/tera-proxy) and dependencies
 
-The following opcodes must be mapped in your `tera-proxy/node_modules/tera-data/map/protocol.{version}.map` file:
+For *FULL* Support: the following opcodes should be mapped in your `tera-proxy/node_modules/tera-data/map/protocol.{version}.map` file:
 * C_SHOW_INVEN
 * S_ABNORMALITY_BEGIN
 * S_ABNORMALITY_END
 * S_ACTION_STAGE
 * S_INVEN_CHANGEDSLOT
 * S_INVEN
+* S_LOAD_ACHIEVEMENT_LIST
 * S_LOGIN
 * S_USER_STATUS
 * S_UPDATE_ACHIEVEMENT_PROGRESS
+
+For *Partial* Support: only the following must be mapped:
+* C_SHOW_INVEN
+* S_ABNORMALITY_BEGIN
+* S_ABNORMALITY_END
+* S_ACTION_STAGE
+* S_INVEN
+* S_LOGIN
+* S_USER_STATUS
