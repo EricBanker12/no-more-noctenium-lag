@@ -14,7 +14,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     
     // Get character ID on login and disable noctenium
     dispatch.hook('S_LOGIN', 9, {order: -100}, event => {
-        cid = event.cid
+        cid = event.gameId
         noctActive = false
     })
     
