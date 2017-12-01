@@ -13,7 +13,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     timeout = 0				// Handler variable for failsafe timeout
     
     // Get character ID on login and disable noctenium
-    dispatch.hook('S_LOGIN', 2, {order: -100}, event => {
+    dispatch.hook('S_LOGIN', 9, {order: -100}, event => {
         cid = event.cid
         noctActive = false
     })
@@ -140,6 +140,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
                 return false
             }
         }
+        /*
         // Smart method achievements
         // Method created by Pinkie Pie (https://github.com/pinkipi)
         if (config.achievementMethod.toLowerCase() == 'smart') {
@@ -155,6 +156,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
             Object.assign(event, {achievements})
             return true
         }
+        */
     })
     
     // comparison function
@@ -162,7 +164,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
         if (debug) {console.log('compareJSON')}
         return JSON.stringify(obj1) == JSON.stringify(obj2)
     }
-    
+    /*
     // S_LOAD_ACHIEVEMENT_LIST
     dispatch.hook('S_LOAD_ACHIEVEMENT_LIST', 1, event => {
         if (config.achievementMethod.toLowerCase() == 'smart') {
@@ -170,4 +172,5 @@ module.exports = function noMoreNocteniumLag(dispatch) {
             if (debug) {console.log('S_LOAD_ACHIEVEMENT_LIST')}
         }
     })
+    */
 }
