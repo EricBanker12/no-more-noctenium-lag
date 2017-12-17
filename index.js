@@ -13,13 +13,13 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     timeout = 0				// Handler variable for failsafe timeout
     
     // Get character ID on login and disable noctenium
-    dispatch.hook('S_LOGIN', 9, {order: -100}, event => {
+    dispatch.hook('S_LOGIN', 9, event => {
         cid = event.gameId
         noctActive = false
     })
     
     // Detect noctenium activation
-    dispatch.hook('S_ABNORMALITY_BEGIN', 2, {order: -100}, event => {
+    dispatch.hook('S_ABNORMALITY_BEGIN', 2, event => {
         // if target is your character and noctenium is toggled on, set true
         if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916, 920, 921, 922, 929].includes(event.id)) {
             noctActive = true
@@ -28,7 +28,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Detect noctenium end
-    dispatch.hook('S_ABNORMALITY_END', 1, {order: -100}, event => {
+    dispatch.hook('S_ABNORMALITY_END', 1, event => {
         // if target is your character and noctenium is toggled off, set false
         if (event.target.equals(cid) && [902, 910, 911, 912, 913, 916, 920, 921, 922, 929].includes(event.id)) {
             noctActive = false
@@ -37,7 +37,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', 'raw', {order: -100}, code => {
+    dispatch.hook('S_ACTION_STAGE', 'raw', {order: 999}, code => {
         // if noctenium active
         if (noctActive) {
             // set counter to block X number of packets
@@ -50,7 +50,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Detect combat status
-    dispatch.hook('S_USER_STATUS', 1, {order: -100}, event => {
+    dispatch.hook('S_USER_STATUS', 1, event => {
         // if character is your character
         if(event.target.equals(cid)) {
             // if in combat, set true
@@ -66,7 +66,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Allow after C_SHOW_INVEN
-    dispatch.hook('C_SHOW_INVEN', 'raw', {order: -100}, code => {
+    dispatch.hook('C_SHOW_INVEN', 'raw', code => {
         // if noctenium active
         if (noctActive) {
             // set counter to allow packets
