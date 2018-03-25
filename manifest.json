@@ -1,0 +1,17 @@
+{
+	"files": {
+		"config.js": {
+			"overwrite": false,
+			"hash": "dbee7272fc67f0814227e5c66ba4c4f6f991b5fb87fea0d9ca4646328cca7264"
+		},
+		"index.js": "0ca7046cc2ce683d59ce20117d7bd732a6fc45f57bcf112aad7560a1d34e9208",
+		"module.json": "23ff3924db185af0aa0c7b8efdf3ff7af2e2d86668660fe019fd41505369ee61",
+		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8"
+	},
+	"defs": {
+		"S_LOGIN": 9,
+		"S_ABNORMALITY_BEGIN": 2,
+		"S_ABNORMALITY_END": 1,
+		"S_USER_STATUS": 1
+	}
+}
