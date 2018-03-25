@@ -37,7 +37,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', 'raw', {order: 999}, code => {
+    dispatch.hook('S_ACTION_STAGE', 'raw', {order: 999, filter: {fake: null}}, code => {
         // if noctenium active
         if (noctActive) {
             // set counter to block X number of packets
