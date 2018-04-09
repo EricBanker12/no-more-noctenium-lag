@@ -13,7 +13,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     timeout = 0				// Handler variable for failsafe timeout
     
     // Get character ID on login and disable noctenium
-    dispatch.hook('S_LOGIN', 9, event => {
+    dispatch.hook('S_LOGIN', 10, event => {
         cid = event.gameId
         noctActive = false
     })
