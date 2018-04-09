@@ -9,7 +9,7 @@
 		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8"
 	},
 	"defs": {
-		"S_LOGIN": 9,
+		"S_LOGIN": 10,
 		"S_ABNORMALITY_BEGIN": 2,
 		"S_ABNORMALITY_END": 1,
 		"S_USER_STATUS": 1
