@@ -1,17 +1,22 @@
 {
 	"files": {
+		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8",
 		"config.js": {
 			"overwrite": false,
-			"hash": "dbee7272fc67f0814227e5c66ba4c4f6f991b5fb87fea0d9ca4646328cca7264"
+			"hash": "d195a5f00c96ed92c001d6e2dd767751b8f3403b71bacc2674be06a868417c27"
 		},
-		"index.js": "b5990b487e8d71ef91f0736e5b274a48db76fc356890584e530c5a57c2282847",
-		"module.json": "23ff3924db185af0aa0c7b8efdf3ff7af2e2d86668660fe019fd41505369ee61",
-		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8"
+		"index.js": "cdaed3dea62f3ce9560ccfeae09b1946dd86e442657c375cc0a35d4f5b5198eb",
+		"module.json": "8f70c4f55186fdf6e4108f5230687f95122e6e621d25a33947b30c124b801639"
 	},
 	"defs": {
-		"S_LOGIN": 10,
+		"C_SHOW_INVEN": "raw",
 		"S_ABNORMALITY_BEGIN": 2,
 		"S_ABNORMALITY_END": 1,
-		"S_USER_STATUS": 1
+		"S_ACTION_STAGE": "raw",
+		"S_INVEN": "raw",
+		"S_INVEN_CHANGEDSLOT": "raw",
+		"S_LOGIN": 10,
+		"S_UPDATE_ACHIEVEMENT_PROGRESS": "raw",
+		"S_USER_STATUS": 2
 	}
 }

@@ -1,4 +1,5 @@
 {
-    "servers": ["https://raw.githubusercontent.com/Mister-Kay/no-more-noctenium-lag/master/"],
-    "supportUrl": "https://github.com/Mister-Kay/no-more-noctenium-lag/issues"
+	"disableAutoUpdate": false,
+	"servers": ["https://raw.githubusercontent.com/Mister-Kay/no-more-noctenium-lag/master/"],
+	"supportUrl": "https://github.com/Mister-Kay/no-more-noctenium-lag/issues"
 }
