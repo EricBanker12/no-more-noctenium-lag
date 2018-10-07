@@ -3,16 +3,16 @@
 		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8",
 		"config.js": {
 			"overwrite": false,
-			"hash": "d195a5f00c96ed92c001d6e2dd767751b8f3403b71bacc2674be06a868417c27"
+			"hash": "4b80feb32c8f4651bf96d9739410da512cf972d8c986bd35fb6375de978c3873"
 		},
-		"index.js": "cdaed3dea62f3ce9560ccfeae09b1946dd86e442657c375cc0a35d4f5b5198eb",
+		"index.js": "74fff4c03a74f7f7a970fdda0fc4cd47a46c45ce228b71deba37d55ad96f8063",
 		"module.json": "8f70c4f55186fdf6e4108f5230687f95122e6e621d25a33947b30c124b801639"
 	},
 	"defs": {
 		"C_SHOW_INVEN": "raw",
-		"S_ABNORMALITY_BEGIN": 2,
+		"S_ABNORMALITY_BEGIN": [2,3],
 		"S_ABNORMALITY_END": 1,
-		"S_ACTION_STAGE": "raw",
+		"S_ACTION_STAGE": [7,8],
 		"S_INVEN": "raw",
 		"S_INVEN_CHANGEDSLOT": "raw",
 		"S_LOGIN": 10,
