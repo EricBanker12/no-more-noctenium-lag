@@ -34,10 +34,11 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     dispatch.hook('S_LOGIN', 10, event => {
         gameId = event.gameId
         noctActive = false
+        counter = {}
     })
     
     // Detect noctenium activation
-    dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.base.majorPatchVersion >= 75 ? 3 : 2, {order: 999, filter: {silenced: null}}, event => {
+    dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.base.majorPatchVersion >= 75 ? 3 : 2, {filter: {silenced: null}}, event => {
         // if target is your character and noctenium is toggled on, set true
         if (event.target.equals(gameId) && noct.includes(event.id)) {
             noctActive = true
@@ -46,16 +47,17 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Detect noctenium end
-    dispatch.hook('S_ABNORMALITY_END', 1, {order: 999, filter: {silenced: null}}, event => {
+    dispatch.hook('S_ABNORMALITY_END', 1, {filter: {silenced: null}}, event => {
         // if target is your character and noctenium is toggled off, set false
         if (event.target.equals(gameId) && noct.includes(event.id)) {
             noctActive = false
+            counter = {}
             if (config.debug) {console.log('noctActive', noctActive)}
         }
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', 'raw', {order: 999, filter: {silenced: null}}, (code, data) => {
+    dispatch.hook('S_ACTION_STAGE', 'raw', {order: -999, filter: {silenced: null}}, (code, data) => {
         // if noctenium active
         if (noctActive && gameId.low == data.readUInt32LE(8) && gameId.high == data.readUInt32LE(12)) {
             // set counter to block X number of packets
@@ -89,7 +91,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
 
     // Block S_INVEN
-    dispatch.hook('S_INVEN', 'raw', {order: 999}, (code, data) => {
+    dispatch.hook('S_INVEN', 'raw', {order: -999}, (code, data) => {
         if (counter.S_INVEN) {
             let more = data.readUInt8(26)
             if (more) counter.S_INVEN += 1
@@ -98,12 +100,12 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Block S_INVEN_CHANGEDSLOT
-    dispatch.hook('S_INVEN_CHANGEDSLOT', 'raw', {order: 999}, () => {
+    dispatch.hook('S_INVEN_CHANGEDSLOT', 'raw', {order: -999}, () => {
         return blockPacket('S_INVEN_CHANGEDSLOT')
     })
     
     // Achievements
-    dispatch.hook('S_UPDATE_ACHIEVEMENT_PROGRESS', 'raw', {order: 999}, () => {
+    dispatch.hook('S_UPDATE_ACHIEVEMENT_PROGRESS', 'raw', {order: -999}, () => {
         return blockPacket('S_UPDATE_ACHIEVEMENT_PROGRESS')
     })
 }
