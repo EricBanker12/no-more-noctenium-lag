@@ -55,11 +55,11 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', dispatch.base.majorPatchVersion >= 75 ? 8 : 7, {order: 999, filter: {silenced: null}}, event => {
+    dispatch.hook('S_ACTION_STAGE', 'raw', {order: 999, filter: {silenced: null}}, (code, data) => {
         // if noctenium active
-        if (noctActive && event.gameId.equals(gameId)) {
+        if (noctActive && gameId.low == data.readUInt32LE(8) && gameId.high == data.readUInt32LE(12)) {
             // set counter to block X number of packets
-            counter.S_INVEN = 2
+            counter.S_INVEN = 1
             counter.S_INVEN_CHANGEDSLOT = 1
             counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 1
             // set failsafe timeout
@@ -89,7 +89,11 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
 
     // Block S_INVEN
-    dispatch.hook('S_INVEN', 'raw', {order: 999}, () => {
+    dispatch.hook('S_INVEN', 'raw', {order: 999}, (code, data) => {
+        if (counter.S_INVEN) {
+            let more = data.readUInt8(26)
+            if (more) counter.S_INVEN += 1
+        }
         return blockPacket('S_INVEN')
     })
     
