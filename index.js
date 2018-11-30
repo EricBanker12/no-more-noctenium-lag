@@ -40,7 +40,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     // Detect noctenium activation
     dispatch.hook('S_ABNORMALITY_BEGIN', dispatch.base.majorPatchVersion >= 75 ? 3 : 2, {filter: {silenced: null}}, event => {
         // if target is your character and noctenium is toggled on, set true
-        if (event.target.equals(gameId) && noct.includes(event.id)) {
+        if (event.target == gameId && noct.includes(event.id)) {
             noctActive = true
             if (config.debug) {console.log('noctActive', noctActive)}
         }
@@ -49,7 +49,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     // Detect noctenium end
     dispatch.hook('S_ABNORMALITY_END', 1, {filter: {silenced: null}}, event => {
         // if target is your character and noctenium is toggled off, set false
-        if (event.target.equals(gameId) && noct.includes(event.id)) {
+        if (event.target == gameId && noct.includes(event.id)) {
             noctActive = false
             counter = {}
             if (config.debug) {console.log('noctActive', noctActive)}
@@ -72,7 +72,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     // Detect combat status
     dispatch.hook('S_USER_STATUS', 2, event => {
         // if character is your character
-        if(event.gameId.equals(gameId)) {
+        if(event.gameId == gameId {
             // check if in combat
             inCombat = (event.status == 1)
             if (config.debug) {console.log('inCombat', inCombat)}
