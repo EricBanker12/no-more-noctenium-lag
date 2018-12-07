@@ -57,9 +57,9 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', 'raw', {order: -999, filter: {silenced: null}}, (code, data) => {
+    dispatch.hook('S_ACTION_STAGE', 8, {order: -999, filter: {silenced: null}}, event => {
         // if noctenium active
-        if (noctActive && gameId.low == data.readUInt32LE(8) && gameId.high == data.readUInt32LE(12)) {
+        if (noctActive && gameId == event.gameId) {
             // set counter to block X number of packets
             counter.S_INVEN = 1
             counter.S_INVEN_CHANGEDSLOT = 1
