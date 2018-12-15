@@ -31,7 +31,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     }
     
     // Get character ID on login and disable noctenium
-    dispatch.hook('S_LOGIN', 10, event => {
+    dispatch.hook('S_LOGIN', 12, event => {
         gameId = event.gameId
         noctActive = false
         counter = {}
@@ -57,7 +57,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // detect skill usage
-    dispatch.hook('S_ACTION_STAGE', 8, {order: -999, filter: {silenced: null}}, event => {
+    dispatch.hook('S_ACTION_STAGE', 9, {order: -999, filter: {silenced: null}}, event => {
         // if noctenium active
         if (noctActive && gameId == event.gameId) {
             // set counter to block X number of packets
@@ -70,7 +70,7 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     })
     
     // Detect combat status
-    dispatch.hook('S_USER_STATUS', 2, event => {
+    dispatch.hook('S_USER_STATUS', 3, event => {
         // if character is your character
         if(event.gameId == gameId) {
             // check if in combat

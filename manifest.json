@@ -1,22 +1,22 @@
 {
-	"files": {
-		"README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8",
-		"config.js": {
-			"overwrite": false,
-			"hash": "4b80feb32c8f4651bf96d9739410da512cf972d8c986bd35fb6375de978c3873"
-		},
-		"index.js": "b93232495430d12dd2427721a1129efa4485709b3f9755d5413a624fb15f870f",
-		"module.json": "8f70c4f55186fdf6e4108f5230687f95122e6e621d25a33947b30c124b801639"
-	},
-	"defs": {
-		"C_SHOW_INVEN": "raw",
-		"S_ABNORMALITY_BEGIN": 3,
-		"S_ABNORMALITY_END": 1,
-		"S_ACTION_STAGE": 8,
-		"S_INVEN": "raw",
-		"S_INVEN_CHANGEDSLOT": "raw",
-		"S_LOGIN": 10,
-		"S_UPDATE_ACHIEVEMENT_PROGRESS": "raw",
-		"S_USER_STATUS": 2
-	}
+    "files": {
+        "README.md": "ee225987ffc2dc792de8704e6f0724404201db3f0c856caa67b63b5cda1408d8",
+        "config.js": {
+            "overwrite": false,
+            "hash": "4b80feb32c8f4651bf96d9739410da512cf972d8c986bd35fb6375de978c3873"
+        },
+        "index.js": "4aa1ba8e33e30c472800cca2b11c9e7e56ab5a1618aeef45a5929c4617a4747a",
+        "module.json": "93938a75653baf35e8f5c301b8a6d1833daf264d2be2e25c55f684d7c6f9811e"
+    },
+    "defs": {
+        "C_SHOW_INVEN": "raw",
+        "S_ABNORMALITY_BEGIN": 3,
+        "S_ABNORMALITY_END": 1,
+        "S_ACTION_STAGE": 9,
+        "S_INVEN": "raw",
+        "S_INVEN_CHANGEDSLOT": "raw",
+        "S_LOGIN": 12,
+        "S_UPDATE_ACHIEVEMENT_PROGRESS": "raw",
+        "S_USER_STATUS": 3
+    }
 }
