@@ -5,7 +5,7 @@
             "overwrite": false,
             "hash": "4b80feb32c8f4651bf96d9739410da512cf972d8c986bd35fb6375de978c3873"
         },
-        "index.js": "4aa1ba8e33e30c472800cca2b11c9e7e56ab5a1618aeef45a5929c4617a4747a",
+        "index.js": "df55f708c8d627a881f46b4f163540039db4b9db283f7a1da6c2db9990c756f9",
         "module.json": "93938a75653baf35e8f5c301b8a6d1833daf264d2be2e25c55f684d7c6f9811e"
     },
     "defs": {
@@ -15,7 +15,7 @@
         "S_ACTION_STAGE": 9,
         "S_INVEN": "raw",
         "S_INVEN_CHANGEDSLOT": "raw",
-        "S_LOGIN": 12,
+        "S_LOGIN": [12,13],
         "S_UPDATE_ACHIEVEMENT_PROGRESS": "raw",
         "S_USER_STATUS": 3
     }
