@@ -1,5 +1,8 @@
 // module for tera-proxy
 module.exports = function noMoreNocteniumLag(dispatch) {
+    // RIP, can't test until NA gets patch
+    if (dispatch.majorPatchVersion >= 85) return
+
     // Constants
     const config = require('./config.js'),
     noct = [902, 910, 911, 912, 913, 916, 917, 920, 921, 922, 929, 999010000]
