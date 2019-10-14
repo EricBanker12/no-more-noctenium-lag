@@ -5,20 +5,17 @@
             "overwrite": false,
             "hash": "4b80feb32c8f4651bf96d9739410da512cf972d8c986bd35fb6375de978c3873"
         },
-        "index.js": "4593cf961d81d08b03f61decb17cc1425fa9b83f2b9cd19b7eb0da182e9bcd93",
+        "index.js": "f4c6678941c44dd22bcf09205f5344399a2442941633ac4ed98e2ca808fed33f",
         "module.json": "93938a75653baf35e8f5c301b8a6d1833daf264d2be2e25c55f684d7c6f9811e"
     },
     "defs": {
-        "C_SHOW_INVEN": "raw",
         "C_SHOW_ITEMLIST": "raw",
-        "S_ABNORMALITY_BEGIN": 3,
+        "S_ABNORMALITY_BEGIN": 4,
         "S_ABNORMALITY_END": 1,
         "S_ACTION_STAGE": 9,
-        "S_INVEN": "raw",
-        "S_INVEN_CHANGEDSLOT": "raw",
         "S_INVEN_USERDATA": "raw",
         "S_ITEMLIST": "raw",
-        "S_LOGIN": 13,
+        "S_LOGIN": [13,14],
         "S_UPDATE_ACHIEVEMENT_PROGRESS": "raw",
         "S_USER_STATUS": 3
     }

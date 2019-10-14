@@ -33,14 +33,14 @@ module.exports = function noMoreNocteniumLag(dispatch) {
     }
     
     // Get character ID on login and disable noctenium
-    dispatch.hook('S_LOGIN', 13, event => {
+    dispatch.hook('S_LOGIN', dispatch.majorPatchVersion < 86 ? 13 : 14, event => {
         gameId = event.gameId
         noctActive = false
         counter = {}
     })
     
     // Detect noctenium activation
-    dispatch.hook('S_ABNORMALITY_BEGIN', 3, {filter: {silenced: null}}, event => {
+    dispatch.hook('S_ABNORMALITY_BEGIN', 4, {filter: {silenced: null}}, event => {
         // if target is your character and noctenium is toggled on, set true
         if (event.target == gameId && noct.includes(event.id)) {
             noctActive = true
@@ -63,8 +63,8 @@ module.exports = function noMoreNocteniumLag(dispatch) {
         // if noctenium active
         if (noctActive && gameId == event.gameId) {
             // set counter to block X number of packets
-            counter.S_INVEN = 1
-            counter.S_INVEN_CHANGEDSLOT = 1
+            // counter.S_INVEN = 1
+            // counter.S_INVEN_CHANGEDSLOT = 1
             counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 1
             counter.S_INVEN_USERDATA = 1
             counter.S_ITEMLIST = 1
@@ -83,58 +83,57 @@ module.exports = function noMoreNocteniumLag(dispatch) {
         }
     })
     
-    if (dispatch.majorPatchVersion < 85) {
-        // Allow after C_SHOW_INVEN
-        dispatch.hook('C_SHOW_INVEN', 'raw', {order: 999, filter: {fake: null}}, () => {
-            // if noctenium active
-            if (noctActive) {
-                // set counter to allow packets
-                counter.S_INVEN = 0
-                counter.S_INVEN_CHANGEDSLOT = 0
-                counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
-            }
-        })
+    // if (dispatch.majorPatchVersion < 85) {
+    //     // Allow after C_SHOW_INVEN
+    //     dispatch.hook('C_SHOW_INVEN', 'raw', {order: 999, filter: {fake: null}}, () => {
+    //         // if noctenium active
+    //         if (noctActive) {
+    //             // set counter to allow packets
+    //             counter.S_INVEN = 0
+    //             counter.S_INVEN_CHANGEDSLOT = 0
+    //             counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
+    //         }
+    //     })
 
-        // Block S_INVEN
-        dispatch.hook('S_INVEN', 'raw', {order: -999}, (code, data) => {
-            if (counter.S_INVEN) {
-                let more = data.readUInt8(26)
-                if (more) counter.S_INVEN += 1
-            }
-            return blockPacket('S_INVEN')
-        })
+    //     // Block S_INVEN
+    //     dispatch.hook('S_INVEN', 'raw', {order: -999}, (code, data) => {
+    //         if (counter.S_INVEN) {
+    //             let more = data.readUInt8(26)
+    //             if (more) counter.S_INVEN += 1
+    //         }
+    //         return blockPacket('S_INVEN')
+    //     })
 
-        // Block S_INVEN_CHANGEDSLOT
-        dispatch.hook('S_INVEN_CHANGEDSLOT', 'raw', {order: -999}, () => {
-            return blockPacket('S_INVEN_CHANGEDSLOT')
-        })
-    }
-    else { 
-        // Allow after C_SHOW_ITEMLIST
-        dispatch.hook('C_SHOW_ITEMLIST', 'raw', {order: 999, filter: {fake: null}}, () => {
-            // if noctenium active
-            if (noctActive) {
-                // set counter to allow packets
-                counter.S_INVEN_USERDATA = 0
-                counter.S_ITEMLIST = 0
-                counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
-            }
-        })
+    //     // Block S_INVEN_CHANGEDSLOT
+    //     dispatch.hook('S_INVEN_CHANGEDSLOT', 'raw', {order: -999}, () => {
+    //         return blockPacket('S_INVEN_CHANGEDSLOT')
+    //     })
+    // }
 
-        // S_INVEN_USERDATA
-        dispatch.hook('S_INVEN_USERDATA', 'raw', {order: -999}, () => {
-            return blockPacket('S_INVEN_USERDATA')
-        })
+    // Allow after C_SHOW_ITEMLIST
+    dispatch.hook('C_SHOW_ITEMLIST', 'raw', {order: 999, filter: {fake: null}}, () => {
+        // if noctenium active
+        if (noctActive) {
+            // set counter to allow packets
+            counter.S_INVEN_USERDATA = 0
+            counter.S_ITEMLIST = 0
+            counter.S_UPDATE_ACHIEVEMENT_PROGRESS = 0
+        }
+    })
 
-        // Block S_ITEMLIST
-        dispatch.hook('S_ITEMLIST', 'raw', {order: -999}, (code, data) => {
-            if (counter.S_ITEMLIST) {
-                let lastInBatch = data.readUInt8(48)
-                if (!lastInBatch) counter.S_ITEMLIST += 1
-            }
-            return blockPacket('S_ITEMLIST')
-        })
-    }
+    // S_INVEN_USERDATA
+    dispatch.hook('S_INVEN_USERDATA', 'raw', {order: -999}, () => {
+        return blockPacket('S_INVEN_USERDATA')
+    })
+
+    // Block S_ITEMLIST
+    dispatch.hook('S_ITEMLIST', 'raw', {order: -999}, (code, data) => {
+        if (counter.S_ITEMLIST) {
+            let lastInBatch = data.readUInt8(48)
+            if (!lastInBatch) counter.S_ITEMLIST += 1
+        }
+        return blockPacket('S_ITEMLIST')
+    })
     
     // Achievements
     dispatch.hook('S_UPDATE_ACHIEVEMENT_PROGRESS', 'raw', {order: -999}, () => {
